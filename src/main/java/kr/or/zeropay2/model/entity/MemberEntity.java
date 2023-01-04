@@ -33,6 +33,9 @@ public class MemberEntity {
   private String email;
 
 
+
+
+
   public MemberEntity(MemberVo memberVo){
     BeanUtils.copyProperties(memberVo, this);
   }

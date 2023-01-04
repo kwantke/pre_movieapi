@@ -10,4 +10,7 @@ public class Zeropay2Application {
 		SpringApplication.run(Zeropay2Application.class, args);
 	}
 
+
+
+
 }

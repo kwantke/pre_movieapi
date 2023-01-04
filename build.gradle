@@ -50,6 +50,8 @@ tasks.named('asciidoctor') {
 	dependsOn test
 }
 
+
+
 asciidoctor.doFirst {  // 7
 	println("---------------- delete present asciidoctor.")
 	delete file('src/main/resources/static/docs')

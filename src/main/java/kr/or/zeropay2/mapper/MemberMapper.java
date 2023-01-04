@@ -9,4 +9,7 @@ import java.util.List;
 public interface MemberMapper {
 
     List<MemberVo> getMemberList();
+
+
+
 }

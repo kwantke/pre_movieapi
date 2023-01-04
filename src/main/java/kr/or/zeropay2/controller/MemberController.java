@@ -21,6 +21,7 @@ public class MemberController {
     }
     @RequestMapping("/")
     public void goDomain(){
+        System.out.println("");
 
     }
 
