@@ -35,6 +35,7 @@ public class MemberApplicationTest {
         this.mockMvc.perform(get("/getMember"))
                 .andExpect(status().isOk())
                 .andDo(document(
+
                         "get-member"
                         , responseFields(
                                 fieldWithPath("id").type(JsonFieldType.STRING).description("ID"),

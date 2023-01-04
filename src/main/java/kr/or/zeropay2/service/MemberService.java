@@ -12,6 +12,9 @@ public interface MemberService {
 
   MemberVo getMemberInfo(String id, String password);
 
+
+
+
   MemberVo getMemberId(String id);
 
   void save(MemberVo memberVo);

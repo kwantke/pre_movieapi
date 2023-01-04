@@ -46,6 +46,9 @@ public class MemberServiceImpl implements MemberService {
     memberVo.setName("최홍익3");
     memberVo.setEmail("chl3@gmail.com");
 
+
+
+
     memberRepository.save(new MemberEntity(memberVo));
   }
 

@@ -22,6 +22,8 @@ public class MemberVo {
     this.password = password;
     this.email = email;
   }
+
+
   public MemberEntity saveMember(){
     return MemberEntity.builder()
             .id(id)
