@@ -1,69 +1,78 @@
 package kr.or.zeropay2;
 
-import kr.or.zeropay.controller.MemberController;
-import kr.or.zeropay.model.vo.MemberVo;
-import kr.or.zeropay.service.MemberService;
-import kr.or.zeropay.util.DocumentUtils;
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-@WebMvcTest(MemberController.class)
+@SpringBootTest
 public class MemberApplicationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private MemberService memberService;
-    @MockBean
-    private MemberController memberController;
-
-    private MemberVo member;
-
-    @BeforeEach
-    public void setUp(){
-        member = new MemberVo("아이디","이름","비번","이메일");
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Test
+    public void getMemeberTest() throws Exception {
+        this.mockMvc.perform(get("/getMember"))
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "get-member"
+                        , responseFields(
+                                fieldWithPath("id").type(JsonFieldType.STRING).description("ID"),
+                                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일")
+                        )
+                                )
+                );
     }
 
     @Test
-    public void getMemberTest() throws Exception {
-        this.mockMvc.perform(get("/getMemberId/{id}",5)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(document("get-member",   // get-member 라는 이름으로 asciidoc 문서가 만들어집니다.
-                        DocumentUtils.getDocumentRequest(), // 문서를 이쁘게 출력합니다.
-                        DocumentUtils.getDocumentResponse(),    // 문서를 이쁘게 출력합니다.
-                        pathParameters( // id 가 url 뒤에 붙는 변수이기에 PathParameters 로 설정해줍니다.
-                                parameterWithName("id").description("member id")
-                        ),
-                        responseFields( // responseField 를 써줍니다.
-                                fieldWithPath("id").description("member id"),
-                                fieldWithPath("name").description("member id"),
-                                fieldWithPath("password").description("member id"),
-                                fieldWithPath("email").description("member id")
-                        )
-                ))
+    public void getMemeberPostTest() throws Exception {
+       // MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        Map<String, String> input = new HashMap<>();
+        input.put("id", "admin");
+        input.put("password", "admin");
+        this.mockMvc.perform(
+                     post("/getMemberPost")
+                             .contentType(MediaType.APPLICATION_JSON)
+                             .content(objectMapper.writeValueAsString(input))
 
-        ;
+                )
+                .andExpect(status().isOk())
+                .andDo(document(
+                                "get-member-post"
+                                , requestFields(
+                                        fieldWithPath("id").type(JsonFieldType.STRING).description("ID")
+                                                   ,fieldWithPath("password").type(JsonFieldType.STRING).description("password")
+                                 )
+                                 , responseFields(
+                                        fieldWithPath("id").type(JsonFieldType.STRING).description("ID"),
+                                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일")
+                                )
+                        )
+                );
     }
 
 }

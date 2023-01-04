@@ -1,10 +1,21 @@
 package kr.or.zeropay2.service;
 
+
+
 import kr.or.zeropay2.model.vo.MemberVo;
+
+import java.util.List;
+
 
 public interface MemberService {
 
-  MemberVo getMeberInfo(String id, String password);
+
+  MemberVo getMemberInfo(String id, String password);
+
+  MemberVo getMemberId(String id);
 
   void save(MemberVo memberVo);
+
+
+  List<MemberVo> getMemberList();
 }

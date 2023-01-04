@@ -1,12 +1,12 @@
 package kr.or.zeropay2.model.vo;
 
 import kr.or.zeropay2.model.entity.MemberEntity;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class MemberVo {
 
@@ -15,6 +15,13 @@ public class MemberVo {
   String password;
   String email;
 
+
+  public MemberVo (String id, String name, String password, String email){
+    this.id = id;
+    this.name = name;
+    this.password = password;
+    this.email = email;
+  }
   public MemberEntity saveMember(){
     return MemberEntity.builder()
             .id(id)

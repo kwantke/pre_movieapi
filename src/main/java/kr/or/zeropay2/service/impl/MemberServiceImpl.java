@@ -1,5 +1,6 @@
 package kr.or.zeropay2.service.impl;
 
+
 import kr.or.zeropay2.model.entity.MemberEntity;
 import kr.or.zeropay2.model.vo.MemberVo;
 import kr.or.zeropay2.repository.MemberRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,15 +18,23 @@ public class MemberServiceImpl implements MemberService {
 
   MemberRepository memberRepository;
 
+  MemberMapper memberMapper;
   @Autowired
-  MemberServiceImpl(MemberRepository memberRepository){
+  MemberServiceImpl(MemberRepository memberRepository, MemberMapper memberMapper){
     this.memberRepository = memberRepository;
+    this.memberMapper = memberMapper;
   }
 
   @Override
-  public MemberVo getMeberInfo(String id, String password) {
+  public MemberVo getMemberInfo(String id, String password) {
       Optional<MemberEntity> memberEntity = memberRepository.findById(id);
     return memberEntity.get().toDomain();
+  }
+
+  @Override
+  public MemberVo getMemberId(String id) {
+    MemberEntity memberEntity = memberRepository.findById(id).get();
+    return memberEntity.toDomain();
   }
 
   @Override
@@ -38,4 +48,11 @@ public class MemberServiceImpl implements MemberService {
 
     memberRepository.save(new MemberEntity(memberVo));
   }
+
+  @Override
+  public List<MemberVo> getMemberList() {
+    return memberMapper.getMemberList();
+  }
+
+
 }
