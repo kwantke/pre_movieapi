@@ -4,7 +4,6 @@ import kr.or.zeropay2.model.entity.MemberEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor

@@ -1,7 +1,12 @@
 server:
-  port: 8080
+  port: 9010
 
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: true  # 요청 url경로와 매핑되는 핸들러가 ㅇ벗
+  web:
+    resources:
+      add-mappings: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -52,5 +57,5 @@ logging:
               BasicBinder: TRACE
 
 mybatis:
-  mapper-locations: classpath:mapper/**.xml
+  mapper-locations: classpath:mybatis/mapper/**.xml
 

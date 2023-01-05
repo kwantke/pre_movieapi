@@ -1,14 +1,18 @@
 package kr.or.zeropay2.service.impl;
 
 
+import kr.or.zeropay2.common.exceptio2.ApiException;
+import kr.or.zeropay2.common.exceptio2.ExceptionEnum;
+import kr.or.zeropay2.mapper.MemberMapper;
 import kr.or.zeropay2.model.entity.MemberEntity;
 import kr.or.zeropay2.model.vo.MemberVo;
 import kr.or.zeropay2.repository.MemberRepository;
 import kr.or.zeropay2.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +31,16 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public MemberVo getMemberInfo(String id, String password) {
-      Optional<MemberEntity> memberEntity = memberRepository.findById(id);
+      Optional<MemberEntity> memberEntity = Optional.ofNullable(memberRepository.findById(id)
+              .orElseThrow(() -> new ApiException(ExceptionEnum.ZERO_01)));
     return memberEntity.get().toDomain();
   }
 
   @Override
   public MemberVo getMemberId(String id) {
-    MemberEntity memberEntity = memberRepository.findById(id).get();
-    return memberEntity.toDomain();
+    Optional<MemberEntity> memberEntity = Optional.ofNullable(memberRepository.findById(id)
+            .orElseThrow(() -> new ApiException(ExceptionEnum.ZERO_01)));
+    return memberEntity.get().toDomain();
   }
 
   @Override
@@ -48,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-
+    MemberEntity m = memberVo.saveMember();
     memberRepository.save(new MemberEntity(memberVo));
   }
 

@@ -3,10 +3,12 @@ package kr.or.zeropay2.service;
 
 
 import kr.or.zeropay2.model.vo.MemberVo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
+@Service
 public interface MemberService {
 
 

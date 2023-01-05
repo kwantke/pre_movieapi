@@ -2,6 +2,9 @@ package kr.or.zeropay2.controller;
 
 
 
+import kr.or.zeropay2.common.exceptio2.ApiException;
+import kr.or.zeropay2.common.exceptio2.ExceptionEnum;
+import kr.or.zeropay2.common.exption.NotFoundException;
 import kr.or.zeropay2.model.vo.MemberVo;
 import kr.or.zeropay2.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,7 @@ public class MemberController {
     /**
      * EntityManagerFactory 생성
      *
-     * @param dataSource
+     * @param
      * @return
      */
     @GetMapping("/getMember")
@@ -49,10 +52,15 @@ public class MemberController {
 
     }
 
-    @PostMapping("/getMemberPost")
-    public MemberVo getMemberPost(@RequestBody MemberVo memberVo){
+    @RequestMapping("/getMemberPost")
+    public MemberVo getMemberPost(MemberVo memberVo){
+        //throw new NotFoundException("예외 처리");
+        MemberVo memberVo1 = memberService.getMemberId(memberVo.getId());
+        if(memberVo1 == null){
+            throw new ApiException(ExceptionEnum.ZERO_01);
+        }
+        return memberVo1;
 
-        return memberService.getMemberId(memberVo.getId());
 
     }
 

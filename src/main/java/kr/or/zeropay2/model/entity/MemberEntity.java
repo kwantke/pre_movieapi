@@ -1,6 +1,7 @@
 package kr.or.zeropay2.model.entity;
 
 import kr.or.zeropay2.model.vo.MemberVo;
+
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Getter
