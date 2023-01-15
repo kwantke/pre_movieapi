@@ -45,17 +45,21 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   @Transactional
-  public void save(MemberVo memberVo) {
+  public boolean save(MemberVo memberVo) {
     //MemberVo memberVo = new MemberVo();
     //memberVo.setId("");
-    memberVo.setPassword("member3");
+    /*memberVo.setPassword("member3");
     memberVo.setName("최홍익3");
-    memberVo.setEmail("chl3@gmail.com");
+    memberVo.setEmail("chl3@gmail.com");*/
 
+    if(!memberRepository.existsById(memberVo.getId())){
+      MemberEntity saveMember = memberVo.saveMember();
 
-
-    MemberEntity m = memberVo.saveMember();
-    memberRepository.save(new MemberEntity(memberVo));
+      memberRepository.save(saveMember);
+    } else{
+      throw new ApiException(ExceptionEnum.ZERO_03);
+    }
+      return true;
   }
 
   @Override

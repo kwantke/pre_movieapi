@@ -26,6 +26,7 @@ public class MemberEntity {
   private String id;
 
   @Column(name="name")
+  @NotBlank
   private String name;
 
   @Column(name="password")

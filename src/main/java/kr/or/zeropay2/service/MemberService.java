@@ -19,7 +19,7 @@ public interface MemberService {
 
   MemberVo getMemberId(String id);
 
-  void save(MemberVo memberVo);
+  boolean save(MemberVo memberVo);
 
 
   List<MemberVo> getMemberList();

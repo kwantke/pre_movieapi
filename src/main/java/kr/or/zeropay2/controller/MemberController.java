@@ -60,9 +60,13 @@ public class MemberController {
             throw new ApiException(ExceptionEnum.ZERO_01);
         }
         return memberVo1;
-
-
     }
 
+    @RequestMapping("/save")
+    public String saveMeber(@Valid MemberVo memberVo){
+        memberService.save(memberVo);
+
+        return "";
+    }
 
 }

@@ -3,12 +3,13 @@ package kr.or.zeropay2.common.exceptio2;
 
 import kr.or.zeropay2.common.exption.HttpErrorInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
+import org.postgresql.util.PSQLException;
 import javax.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -30,7 +31,12 @@ public class GlobalExceptionHandler {
     return createCustomErrorInfo(ExceptionEnum.RUNTIME_EXCEPTION.getCode(), request.getPathInfo(), e.getMessage());
 
   }
+  @ExceptionHandler({PSQLException.class})
+  public ResponseEntity<ApiExceptionEntity> exceptionHandler(HttpServletRequest request, final PSQLException e) {
+    //e.printStackTrace();
+    return createCustomErrorInfo(ExceptionEnum.SQL_ERROR.getCode(), request.getPathInfo(), e.getMessage());
 
+  }
 
   @ExceptionHandler({NoHandlerFoundException.class})
   public ResponseEntity<ApiExceptionEntity> NoHandlerFound(HttpServletRequest request, final NoHandlerFoundException e) {
