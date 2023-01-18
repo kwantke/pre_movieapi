@@ -31,6 +31,9 @@ spring:
 #      hibernate:
 #        type: trace
 
+jwt:
+  base64:
+    secret: 'fsdfsdrSerTStWQrEWHGISfsadfsdqwreeWRTEWtWetTEWSyRYdYdruhS324523GFDRTDRGAWQerrerfsdfsdfsdgdsgsdftgsdgsdg32fdsFGsdfsDfSDF'
 
 logging:
   level:
