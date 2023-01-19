@@ -40,6 +40,7 @@ public class JwtAuthTokenProvider implements AuthTokenProvider<JwtAuthToken>{
 
   @Override
   public JwtAuthToken convertAuthToken(String token) {
+    System.out.println(token);
     return new JwtAuthToken(token, key);
   }
 

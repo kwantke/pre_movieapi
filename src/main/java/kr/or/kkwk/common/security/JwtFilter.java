@@ -1,5 +1,6 @@
 package kr.or.kkwk.common.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -14,7 +15,8 @@ import java.util.Optional;
 
 public class JwtFilter extends OncePerRequestFilter {
   public static final String AUTHORIZATION_HEADER = "x-auth-token";
-  private JwtAuthTokenProvider tokenProvider;
+  private final JwtAuthTokenProvider tokenProvider;
+
 
   public JwtFilter(JwtAuthTokenProvider tokenProvider) {
     this.tokenProvider = tokenProvider;

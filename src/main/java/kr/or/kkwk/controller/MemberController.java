@@ -56,7 +56,7 @@ public class MemberController {
     }
 
     @RequestMapping("/getMemberPost")
-    public MemberVo getMemberPost(MemberVo memberVo){
+    public MemberVo getMemberPost(@RequestBody MemberVo memberVo){
         //throw new NotFoundException("예외 처리");
         MemberVo memberVo1 = memberService.getMemberId(memberVo.getId());
         if(memberVo1 == null){
@@ -78,5 +78,7 @@ public class MemberController {
 
         return token;
     }
+
+
 
 }
